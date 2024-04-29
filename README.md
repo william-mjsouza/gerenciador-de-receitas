@@ -9,5 +9,5 @@ O software possui as seguintes funcionalidades:
 5. Lista de Favoritos
 6. Sugestão de Receitas Aleatórias
 
-Desenvolvedores que fizeram parte do projeto:
+Desenvolvido por:
 Arthur Leal, Bruno Carvalho, Thiago Nadler e William Souza
