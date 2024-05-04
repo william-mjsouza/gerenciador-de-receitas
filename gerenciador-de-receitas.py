@@ -69,9 +69,17 @@ Critérios de avaliação:
         ○ Apresentação da ferramenta e manual do usuário;
         ○ Funcionalidade extra.
 ===================================================================================================================="""
+from os import path
 
 # Função para adicionar receitas ao arquivo receitas.txt
 def adicionar_receitas():
+    # Cria o "banco de dados" receitas.txt no mesmo diretório do projeto caso ele não exista
+    if not path.exists("receitas.txt"):
+        # Abre o arquivo em modo escrita
+        with open("receitas.txt", "w", encoding='utf-8') as f:
+            # Não faz nada
+            pass
+
     receitas = []
     print('Adicione receitas (-1 para parar)')
 
@@ -103,6 +111,13 @@ def adicionar_receitas():
         receitas.append(receita)
 
         cont += 1
+
+    # Abre o arquivo em modo apêndice
+    with open("receitas.txt", "a") as f:
+        # Percorre a lista de receitas
+        for receita in receitas:
+            # Escreve a receita no arquivo
+            f.write(f"{receita['nome']}\n{receita['origem']}\n{receita['ingredientes']}\n{receita['preparo']}\n")
 
     print(receitas)
     return
