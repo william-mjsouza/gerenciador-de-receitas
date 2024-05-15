@@ -5,7 +5,7 @@ def favoritar_receitas():
 # Função para adicionar receitas ao arquivo receitas.txt
 def adicionar_receitas(receitas: list, modo: str) -> None:
     # Se receitas for uma lista vazia, será preenchida a lista com novas receitas
-    if len(receitas) == 0:
+    if modo == 'a':
         print('Adicione receitas (-1 para parar)')
 
         cont = 1
@@ -165,13 +165,17 @@ def excluir_receitas():
     for i in range(len(receitas_para_excluir)):
         receitas_para_excluir[i] = receitas_para_excluir[i].strip().lower()
 
+    excluir = []
     # Remove da lista receitas as receitas cujos nomes foram informados pelo usuário
     for i in range(len(receitas_para_excluir)):
-        for j in range(len(receitas_para_excluir)):
+        for j in range(len(receitas)):
             if receitas[j]['nome'] == receitas_para_excluir[i]:
                 print(f'[AVISO] {receitas[j]['nome']} foi excluído!')
-                receitas.pop(j)
+                excluir.append(j)
                 break
+    # Remove da lista receitas
+    for indice in excluir:
+        receitas.pop(indice)
 
     # Atualiza no banco de dados
     adicionar_receitas(receitas, 'w')
