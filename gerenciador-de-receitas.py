@@ -69,97 +69,45 @@ Critérios de avaliação:
         ○ Apresentação da ferramenta e manual do usuário;
         ○ Funcionalidade extra.
 ===================================================================================================================="""
-from os import path
 
-# Função para adicionar receitas ao arquivo receitas.txt
-def adicionar_receitas():
-    # Cria o "banco de dados" receitas.txt no mesmo diretório do projeto caso ele não exista
-    if not path.exists("receitas.txt"):
-        # Abre o arquivo em modo escrita
-        with open("receitas.txt", "w", encoding='utf-8') as f:
-            # Não faz nada
-            pass
+# Importa as funções do gerenciador de receitas
+import gerenciar_receitas
 
-    receitas = []
-    print('Adicione receitas (-1 para parar)')
-
-    cont = 1
-    while True:
-        # Solicita para o usuário digitar as informações da nova receita
-        nome_receita = input(f'Digite o nome da {cont}ª receita: ')
-        if nome_receita == '-1':
-            break
-        pais_origem = input(f'Digite o país de origem da {cont}ª receita: ')
-        if pais_origem == '-1':
-            break
-        ingredientes_receita = input(f'Digite os ingredientes da {cont}ª receita separados por vírgula: ')
-        if ingredientes_receita == '-1':
-            break
-        modo_preparo = input(f'Digite o modo de preparo da {cont}ª receita: ')
-        if modo_preparo == '-1':
-            break
-
-        # Cria um novo dicionário receita a cada iteração do loop
-        receita = {
-            'nome': nome_receita,
-            'origem': pais_origem,
-            'ingredientes': ingredientes_receita,
-            'preparo': modo_preparo
-        }
-
-        # Adiciona a nova receita no final da lista receitas
-        receitas.append(receita)
-
-        cont += 1
-
-    # Abre o arquivo em modo apêndice
-    with open("receitas.txt", "a") as f:
-        # Percorre a lista de receitas
-        for receita in receitas:
-            # Escreve a receita no arquivo
-            f.write(f"{receita['nome']}\n{receita['origem']}\n{receita['ingredientes']}\n{receita['preparo']}\n")
-
-    print(receitas)
-    return
-
-# Função para visualizar todas as receitas que estão no arquivo receitas.txt
-def visualizar_receitas():
-    return
-
-# Função atualizar as receitas do arquivo receitas.txt
-def atualizar_receitas():
-    return
-
-# Função para exluir receitas do arquivo receitas.txt
-def excluir_receitas():
-    return
-
-# Menu do gerenciador de receitas
-opcao = ''
-while opcao != '5':
-    opcao = input("""
-===========================
-  Gerenciador de Receitas
-===========================
-
-Escolha uma opção:
-[ 1 ] - Adicionar Receitas
-[ 2 ] - Visualizar Receitas
-[ 3 ] - Atualizar Receitas
-[ 4 ] - Excluir Receitas
-[ 5 ] - Sair do Programa
+# Função principal
+if __name__ == '__main__':
+    # Menu do gerenciador de receitas
+    opcao = ''
+    while opcao != '6':
+        opcao = input("""
+    ===========================
+      Gerenciador de Receitas
+    ===========================
     
-Sua opção: """)
-    if opcao == '1':
-        adicionar_receitas()
-    elif opcao == '2':
-        visualizar_receitas()
-    elif opcao == '3':
-        atualizar_receitas()
-    elif opcao == '4':
-        excluir_receitas()
-    elif opcao == '5':
-        print('Programa encerrado!')
-        break
-    else:
-        print('Opção inválida!')
+    Escolha uma opção:
+    [ 1 ] - Adicionar Receitas
+    [ 2 ] - Visualizar Receitas
+    [ 3 ] - Atualizar Receitas
+    [ 4 ] - Excluir Receitas
+    [ 5 ] - Sugerir Receitas
+    [ 6 ] - Sair do Programa
+    
+    Sua opção: """)
+        if opcao == '1':
+            novas_receitas = []
+            # Cria um novo banco de dados, caso não exista, e permite adicionar novas receitas nele
+            gerenciar_receitas.adicionar_receitas(novas_receitas, 'a')
+        elif opcao == '2':
+            # Exibe as receitas com as informações de país de origem, ingredientes e modo de preparo
+            receitas_info = True
+            gerenciar_receitas.visualizar_receitas(receitas_info)
+        elif opcao == '3':
+            gerenciar_receitas.atualizar_receitas()
+        elif opcao == '4':
+            gerenciar_receitas.excluir_receitas()
+        elif opcao == '5':
+            gerenciar_receitas.sugerir_receitas()
+        elif opcao == '6':
+            print('Programa encerrado!')
+            break
+        else:
+            print('Opção inválida!')
