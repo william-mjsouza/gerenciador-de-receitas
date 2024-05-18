@@ -76,22 +76,21 @@ import gerenciar_receitas
 # Função principal
 if __name__ == '__main__':
     # Menu do gerenciador de receitas
-    opcao = ''
-    while opcao != '6':
-        opcao = input("""
-    ===========================
-      Gerenciador de Receitas
-    ===========================
-    
-    Escolha uma opção:
-    [ 1 ] - Adicionar Receitas
-    [ 2 ] - Visualizar Receitas
-    [ 3 ] - Atualizar Receitas
-    [ 4 ] - Excluir Receitas
-    [ 5 ] - Sugerir Receitas
-    [ 6 ] - Sair do Programa
-    
-    Sua opção: """)
+    continuar = 'S'
+    while continuar[0] == 'S':
+        print('===========================')
+        print('  Gerenciador de Receitas  ')
+        print('===========================')
+        print('')
+        print('[ 1 ] - Adicionar Receitas')
+        print('[ 2 ] - Visualizar Receitas')
+        print('[ 3 ] - Atualizar Receitas')
+        print('[ 4 ] - Excluir Receitas')
+        print('[ 5 ] - Sugerir Receitas')
+        print('[ 6 ] - Menor Receita')
+        print('[ 7 ] - Sair do Programa')
+        print('')
+        opcao = input('Sua opção: ')
         if opcao == '1':
             novas_receitas = []
             # Cria um novo banco de dados, caso não exista, e permite adicionar novas receitas nele
@@ -107,7 +106,11 @@ if __name__ == '__main__':
         elif opcao == '5':
             gerenciar_receitas.sugerir_receitas()
         elif opcao == '6':
+            gerenciar_receitas.menor_receita()
+        elif opcao == '7':
             print('Programa encerrado!')
             break
         else:
             print('Opção inválida!')
+
+        continuar = input('Deseja continuar usando o programa [S/N]? ').upper()

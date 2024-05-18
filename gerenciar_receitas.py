@@ -4,7 +4,7 @@ def favoritar_receitas():
 
 # Função para adicionar receitas ao arquivo receitas.txt
 def adicionar_receitas(receitas: list, modo: str) -> None:
-    # Se receitas for uma lista vazia, será preenchida a lista com novas receitas
+    # Se o modo de abertura do arquivo for apêndice, será preenchida a lista com novas receitas
     if modo == 'a':
         print('Adicione receitas (-1 para parar)')
 
@@ -109,7 +109,7 @@ def visualizar_receitas(detalhes: bool) -> list:
 
 
 # Função para atualizar as receitas do arquivo receitas.txt
-def atualizar_receitas():
+def atualizar_receitas() -> None:
     # Exibe para o usuário todas as receitas que estão no banco de dados
     receitas = visualizar_receitas(False)
 
@@ -143,21 +143,21 @@ def atualizar_receitas():
 
 
 # Função para exluir receitas do arquivo receitas.txt
-def excluir_receitas():
+def excluir_receitas() -> None:
     # Exibe o nome das receitas que estão cadastradas no banco de dados
     receitas = visualizar_receitas(False)
 
     # Pede pro usuário digitar os nomes das receitas que ele quer apagar separados por vírgula
     receitas_para_excluir = input('Digite os nomes das receitas que você quer excluir separados por vírgula: ').split(',')
 
-    # Pede pro usuário confirmar que é esssa mesmo que ele quer excluir
+    # Pede pro usuário confirmar que são esssas mesmo que ele quer excluir
     print(f'As receitas que serão excluídas são: {receitas_para_excluir}')
     resposta = input('Confirma a exclusão delas [S/N]? ').upper()
     while resposta != 'S':
-        # Pede pro usuário digitar os nomes das receitas que ele quer apagar separados por vírgula
+        # Repete a solicitação
         receitas_para_excluir = input('Digite novamente os nomes das receitas que você quer excluir: ').split(',')
 
-        # Pede pro usuário confirmar que é esssa mesmo que ele quer excluir
+        # Repete a solicitação
         print(f'As receitas que serão excluídas são: {receitas_para_excluir}')
         resposta = input('Confirma a exclusão delas [S/N]? ').upper()
 
@@ -165,17 +165,13 @@ def excluir_receitas():
     for i in range(len(receitas_para_excluir)):
         receitas_para_excluir[i] = receitas_para_excluir[i].strip().lower()
 
-    excluir = []
-    # Remove da lista receitas as receitas cujos nomes foram informados pelo usuário
+    # Remove da lista receitas as receitas cujos nomes estão na lista receitas_para_excluir
     for i in range(len(receitas_para_excluir)):
         for j in range(len(receitas)):
             if receitas[j]['nome'] == receitas_para_excluir[i]:
                 print(f'[AVISO] {receitas[j]['nome']} foi excluído!')
-                excluir.append(j)
+                receitas.pop(j)
                 break
-    # Remove da lista receitas
-    for indice in excluir:
-        receitas.pop(indice)
 
     # Atualiza no banco de dados
     adicionar_receitas(receitas, 'w')
@@ -184,4 +180,43 @@ def excluir_receitas():
 
 
 def sugerir_receitas():
+    return
+
+
+def menor_receita() -> None:
+    # Abre o arquivo para leitura
+    with open("receitas.txt", 'r', encoding="utf-8") as f:
+        linhas = f.readlines()
+
+    # Inicializa a variável para armazenar a menor quantidade de ingredientes
+    menor_quantidade = float('inf')
+
+    # Inicializa a lista para armazenar os nomes das receitas com a menor quantidade de ingredientes
+    receitas_menor_quantidade = []
+
+    # Itera sobre as linhas do arquivo, assumindo que cada receita ocupa 4 linhas
+    for i in range(0, len(linhas), 4):
+        # Conta a quantidade de ingredientes da receita atual
+        ingredientes = linhas[i + 2].strip()  # A terceira linha de cada receita contém os ingredientes
+        quantidade_ingrediente = len(ingredientes.split(','))
+
+        # Verifica se a quantidade atual é menor ou igual à menor quantidade encontrada
+        if quantidade_ingrediente < menor_quantidade:
+            menor_quantidade = quantidade_ingrediente
+            receitas_menor_quantidade = [linhas[i].strip()]  # Reinicia a lista com o nome da receita atual
+
+        elif quantidade_ingrediente == menor_quantidade:
+            receitas_menor_quantidade.append(linhas[i].strip())  # Adiciona o nome da receita à lista
+
+    # Exibe o nome da receita com a menor quantidade
+    if len(receitas_menor_quantidade) == 1:
+        print(f'A receita {''.join(receitas_menor_quantidade)} possue a menor quantidade de ingredientes.')
+
+    # Exibe os nomes das receitas com a menor quantidade de ingredientes na mesma linha, separados por vírgula
+    elif len(receitas_menor_quantidade) > 1:
+        print('As receitas', ", ".join(receitas_menor_quantidade), ' possuem as menores quantidades de ingredientes.')
+
+    else:
+        print("Nenhuma receita foi encontrada.")
+
     return
