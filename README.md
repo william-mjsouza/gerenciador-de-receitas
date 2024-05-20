@@ -36,14 +36,15 @@ Permite adicionar novas receitas ao banco de dados.
 - Permite ao usuário excluir uma ou mais receitas cadastradas.
 - Solicita ao usuário os nomes das receitas que deseja excluir e confirmação antes da exclusão.
 
-## Sugerir Receitas
-- Sugere uma receita aleatória do banco de dados.
+### Sugerir Receitas
+- A função sugerir receitas pode ser usada para sugerir uma receita aleatória do banco de dados.
 
 ### Receita com Menor Quantidade de Ingredientes
 - Identifica e exibe a receita com a menor quantidade de ingredientes.
 
 ## Uso
-- Execute `gerenciador-de-receitas.py` em um ambiente Python e siga os menus interativos.
+- Para utilizar este sistema, basta executar o arquivo gerenciador-de-receitas.py em um ambiente Python. O sistema guiará o usuário por meio de menus interativos para realizar as operações desejadas.
+
 
 
 
