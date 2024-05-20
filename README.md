@@ -18,10 +18,15 @@ Este é um sistema de gerenciamento de receitas desenvolvido em Python, que perm
 
 ## Funcionalidades
 ### Adicionar Receitas
-Permite adicionar novas receitas ao banco de dados e marcar como favoritas.
+Permite adicionar novas receitas ao banco de dados.
+Solicita ao usuário o nome da receita, país de origem, ingredientes e modo de preparo.
+O usuário pode optar por marcar uma receita como favorita.
 
 ### Visualizar Receitas
-Exibe todas ou somente as receitas favoritas, com opção de ver detalhes e receitas por país.
+Exibe todas as receitas cadastradas no banco de dados ou somente as favoritas.
+O usuário pode optar por visualizar os detalhes de cada receita, incluindo país de origem, ingredientes e modo de preparo.
+O usuário pode ver as receitas de um determinado país.
+
 
 
 
