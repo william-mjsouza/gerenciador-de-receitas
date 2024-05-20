@@ -40,10 +40,17 @@ Permite adicionar novas receitas ao banco de dados.
 - A função sugerir receitas pode ser usada para sugerir uma receita aleatória do banco de dados.
 
 ### Receita com Menor Quantidade de Ingredientes
-- Identifica e exibe a receita com a menor quantidade de ingredientes.
+- Identifica a receita com a menor quantidade de ingredientes cadastrada no banco de dados
+- Exibe o nome da receita com a menor quantidade de ingredientes ou os nomes das receitas caso haja empate.
 
 ## Uso
 - Para utilizar este sistema, basta executar o arquivo gerenciador-de-receitas.py em um ambiente Python. O sistema guiará o usuário por meio de menus interativos para realizar as operações desejadas.
+
+## Autores
+- Arthur Leal
+- Bruno Carvalho
+- Thiago De Lavor
+- William Souza.
 
 
 
