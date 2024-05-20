@@ -28,15 +28,16 @@ Permite adicionar novas receitas ao banco de dados.
 - O usuário pode ver as receitas de um determinado país.
 
 ### Atualizar Receitas
-Permite ao usuário atualizar as informações de uma ou mais receitas cadastradas.
-Solicita ao usuário os nomes das receitas que deseja atualizar e, em seguida, as novas informações (país de origem, ingredientes e modo de preparo).
+- Permite ao usuário atualizar as informações de uma ou mais receitas cadastradas.
+- Solicita ao usuário os nomes das receitas que deseja atualizar e, em seguida, as novas informações (país de origem, ingredientes e modo de preparo).
 
 
 ### Excluir Receitas
-Permite ao usuário excluir uma ou mais receitas cadastradas.
-Solicita ao usuário os nomes das receitas que deseja excluir e confirmação antes da exclusão.
+- Permite ao usuário excluir uma ou mais receitas cadastradas.
+- Solicita ao usuário os nomes das receitas que deseja excluir e confirmação antes da exclusão.
 
 ## Sugerir Receitas
+- Sugere uma receita aleatória do banco de dados.
 
 
 
