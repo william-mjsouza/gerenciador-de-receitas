@@ -39,6 +39,12 @@ Permite adicionar novas receitas ao banco de dados.
 ## Sugerir Receitas
 - Sugere uma receita aleatória do banco de dados.
 
+### Receita com Menor Quantidade de Ingredientes
+- Identifica e exibe a receita com a menor quantidade de ingredientes.
+
+## Uso
+- Execute `gerenciador-de-receitas.py` em um ambiente Python e siga os menus interativos.
+
 
 
 
