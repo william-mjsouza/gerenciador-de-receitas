@@ -107,8 +107,7 @@ if __name__ == '__main__':
             gerenciar_receitas.adicionar_receitas(novas_receitas, 'a')
         elif opcao == 2:
             # Exibe as receitas com as informações de país de origem, ingredientes e modo de preparo
-            receitas_info = True
-            gerenciar_receitas.visualizar_receitas(receitas_info)
+            gerenciar_receitas.visualizar_receitas(True, False)
         elif opcao == 3:
             gerenciar_receitas.atualizar_receitas()
         elif opcao == 4:

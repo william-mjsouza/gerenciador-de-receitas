@@ -69,7 +69,7 @@ def adicionar_receitas(receitas: list, modo: str) -> None:
 
 
 # Função para visualizar todas as receitas que estão no arquivo receitas.txt
-def visualizar_receitas(detalhes: bool) -> list:
+def visualizar_receitas(detalhes: bool, todas: bool) -> list:
     receitas = []
     linhas = []
     # Tenta abrir o arquivo receitas.txt em modo leitura
@@ -106,38 +106,91 @@ def visualizar_receitas(detalhes: bool) -> list:
         if (i == 0) or (i % 4 == 0):
             receitas.append(receita)
 
-    # Pergunta qual tipo de visualização o usário quer ver
-    msg = 'Escolha o modo de visualização'
-    tam_msg = len(msg)
-    print('-' * tam_msg)
-    print(msg)
-    print('-' * tam_msg)
+    opcao = 0
+    if not todas:
+        # Pergunta qual tipo de visualização o usário quer ver
+        msg = 'Escolha o modo de visualização'
+        tam_msg = len(msg)
+        print('-' * tam_msg)
+        print(msg)
+        print('-' * tam_msg)
 
-    print('')
-    print('[ 1 ] - Pesquisar por país')
-    print('[ 2 ] - Exibir as receitas favoritas')
-    print('[ 3 ] - Exibir todas as receitas')
-    print('')
-    # Garante que a opção digitada seja um número e que esteja no intervalo de 1 a 7
-    while True:
-        opcao = input('Sua opção: ')
-        try:
-            opcao = int(opcao)
-            if (opcao >= 1) and (opcao <= 3):
-                break
-            else:
+        print('')
+        print('[ 1 ] - Pesquisar por país')
+        print('[ 2 ] - Exibir as receitas favoritas')
+        print('[ 3 ] - Exibir todas as receitas')
+        print('')
+        # Garante que a opção digitada seja um número e que esteja no intervalo de 1 a 7
+        while True:
+            opcao = input('Sua opção: ')
+            try:
+                opcao = int(opcao)
+                if (opcao >= 1) and (opcao <= 3):
+                    break
+                else:
+                    print('[AVISO] Opção inválida! Deve ser um número de 1 a 3, por favor digite novamente.')
+            except ValueError:
                 print('[AVISO] Opção inválida! Deve ser um número de 1 a 3, por favor digite novamente.')
-        except ValueError:
-            print('[AVISO] Opção inválida! Deve ser um número de 1 a 3, por favor digite novamente.')
-    opcao = input('Sua opção: ')
-    if opcao == 1:
-        pass
-    elif opcao == 2:
-        pass
-    elif opcao == 3:
-        print('-' * 20)
-        print('Todas as Receitas')
-        print('-' * 20)
+        k = 1
+        if opcao == 1:
+            msg = 'Receitas por País'
+            tam_msg = len(msg)
+            print('-' * tam_msg)
+            print(msg)
+            print('-' * tam_msg)
+            print('')
+            # Solicita que o usuário digite o nome do país para a pesquisa
+            pais = input('Digite o nome do país das receitas que você quer pesquisar: ').lower()
+            for i, receita in enumerate(receitas):
+                if (receitas[i]["origem"]).lower() == pais:
+                    # Exibe o nome
+                    print(f'{k}ª receita: {receitas[i]["nome"]}')
+                    if detalhes:
+                        # Exibe o país
+                        print(f'\tPaís de origem: {receitas[i]["origem"]}')
+                        # Exibe os ingredientes
+                        print(f'\tIngredientes: {receitas[i]["ingredientes"]}')
+                        # Exibe o modo de preparo no formato passo a passo
+                        print('\tModo de preparo:')
+                        passos = receitas[i]["preparo"].split('.')
+                        for j, passo in enumerate(passos):
+                            print(f'\t{j + 1}º passo: {passo.strip()}')
+                            if (j + 1) == (len(passos) - 1):
+                                break
+
+                        k += 1
+        elif opcao == 2:
+            msg = 'Receitas Favoritas'
+            tam_msg = len(msg)
+            print('-' * tam_msg)
+            print(msg)
+            print('-' * tam_msg)
+            print('')
+            for i, receita in enumerate(receitas):
+                # Verifica se o último caracter do nome da receita é um '*' (se a receita está favoritada)
+                if (receitas[i]["nome"][-1]).lower() == '*':
+                    # Exibe o nome
+                    print(f'{k}ª receita: {receitas[i]["nome"]}')
+                    if detalhes:
+                        # Exibe o país
+                        print(f'\tPaís de origem: {receitas[i]["origem"]}')
+                        # Exibe os ingredientes
+                        print(f'\tIngredientes: {receitas[i]["ingredientes"]}')
+                        # Exibe o modo de preparo no formato passo a passo
+                        print('\tModo de preparo:')
+                        passos = receitas[i]["preparo"].split('.')
+                        for j, passo in enumerate(passos):
+                            print(f'\t{j + 1}º passo: {passo.strip()}')
+                            if (j + 1) == (len(passos) - 1):
+                                break
+                    k += 1
+    if (opcao == 3) or todas:
+        msg = 'Todas as Receitas'
+        tam_msg = len(msg)
+        print('-' * tam_msg)
+        print(msg)
+        print('-' * tam_msg)
+        print('')
         for i, receita in enumerate(receitas):
             # Exibe o nome
             print(f'{i + 1}ª receita: {receitas[i]["nome"]}')
@@ -154,7 +207,7 @@ def visualizar_receitas(detalhes: bool) -> list:
                     if (j + 1) == (len(passos) - 1):
                         break
 
-    print('-' * 20)
+        print('-' * tam_msg)
 
     return receitas
 
@@ -162,7 +215,7 @@ def visualizar_receitas(detalhes: bool) -> list:
 # Função para atualizar as receitas do arquivo receitas.txt
 def atualizar_receitas() -> None:
     # Exibe para o usuário todas as receitas que estão no banco de dados
-    receitas = visualizar_receitas(False)
+    receitas = visualizar_receitas(False, True)
 
     # Pergunta ao usuário quais receitas ele quer atualizar
     receitas_mudar = input('Quais destas receitas você quer atualizar [digite separado por vírgula]? ').split(',')
@@ -195,7 +248,7 @@ def atualizar_receitas() -> None:
 # Função para exluir receitas do arquivo receitas.txt
 def excluir_receitas() -> None:
     # Exibe o nome das receitas que estão cadastradas no banco de dados
-    receitas = visualizar_receitas(False)
+    receitas = visualizar_receitas(False, True)
 
     # Pede pro usuário digitar os nomes das receitas que ele quer apagar separados por vírgula
     receitas_para_excluir = input('Digite os nomes das receitas que você quer excluir separados por vírgula: ').split(',')
@@ -229,7 +282,8 @@ def excluir_receitas() -> None:
     return None
 
 
-def sugerir_receitas():
+def sugerir_receitas() -> None:
+
     return None
 
 
