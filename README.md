@@ -13,9 +13,8 @@ Este é um sistema de gerenciamento de receitas desenvolvido em Python, que perm
 
 ## Requisitos
   Pacotes utilizados:
-    - Python 3.12
-    
-    - Importação da biblioteca random
+    Python 3.12
+    Importação da biblioteca random
 
 ## Funcionalidades
 ### Adicionar Receitas
