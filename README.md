@@ -27,6 +27,12 @@ Permite adicionar novas receitas ao banco de dados.
 - O usuário pode optar por visualizar os detalhes de cada receita, incluindo país de origem, ingredientes e modo de preparo.
 - O usuário pode ver as receitas de um determinado país.
 
+### Atualizar Receitas
+Atualiza informações de receitas cadastradas.
+
+### Excluir Receitas
+Exclui receitas do banco de dados com confirmação do usuário.
+
 
 
 
