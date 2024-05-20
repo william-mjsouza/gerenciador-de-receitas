@@ -43,9 +43,10 @@ Permite adicionar novas receitas ao banco de dados.
 - Identifica a receita com a menor quantidade de ingredientes cadastrada no banco de dados
 - Exibe o nome da receita com a menor quantidade de ingredientes ou os nomes das receitas caso haja empate.
 
-###Favoritar Receitas
+### Favoritar Receitas
 - Permite ao usuário marcar uma receita como favorita.
 - Solicita ao usuário o nome da receita que deseja favoritar.
+
 ## Uso
 - Para utilizar este sistema, basta executar o arquivo gerenciador-de-receitas.py em um ambiente Python. O sistema guiará o usuário por meio de menus interativos para realizar as operações desejadas.
 
