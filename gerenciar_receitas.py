@@ -6,7 +6,12 @@ def favoritar_receitas():
 def adicionar_receitas(receitas: list, modo: str) -> None:
     # Se o modo de abertura do arquivo for apêndice, será preenchida a lista com novas receitas
     if modo == 'a':
-        print('Adicione receitas (-1 para parar)')
+        msg = 'Adicione receitas (-1 para parar)'
+        tam_msg = len(msg)
+        print('-' * tam_msg)
+        print(msg)
+        print('-' * tam_msg)
+        print('')
 
         cont = 1
         while True:
@@ -18,7 +23,7 @@ def adicionar_receitas(receitas: list, modo: str) -> None:
             # Pergunta se ele deseja favoritar
             else:
                 favorita = input(f'Deseja adicionar {nome_receita} aos favoritos [S/N]? ').upper()
-                if favorita == 'S':
+                if favorita[0] == 'S':
                     nome_receita += '*'
             # País
             pais_origem = input(f'Digite o país de origem da {cont}ª receita: ')
@@ -29,9 +34,16 @@ def adicionar_receitas(receitas: list, modo: str) -> None:
             if ingredientes_receita == '-1':
                 break
             # Modo de Preparo
-            modo_preparo = input(f'Digite o modo de preparo da {cont}ª receita: ')
-            if modo_preparo == '-1':
-                break
+            modo_preparo = ''
+            print(f'Digite o modo de preparo (passo a passo) da {cont}ª receita (-1 para parar)')
+            j = 1
+            while True:
+                passo = input(f'{j}º passo: ')
+                if passo == '-1':
+                    break
+                else:
+                    modo_preparo += f'{passo}. '
+                j += 1
 
             # Cria um novo dicionário receita a cada iteração do loop
             receita = {
@@ -53,38 +65,27 @@ def adicionar_receitas(receitas: list, modo: str) -> None:
             # Escreve a receita no arquivo
             f.write(f"{receita['nome']}\n{receita['origem']}\n{receita['ingredientes']}\n{receita['preparo']}\n")
 
-    return
+    return None
 
 
 # Função para visualizar todas as receitas que estão no arquivo receitas.txt
 def visualizar_receitas(detalhes: bool) -> list:
     receitas = []
     linhas = []
-    # Abre o arquivo em modo leitura
-    with open("receitas.txt", 'r', encoding="utf-8") as f:
-        print('-' * 20)
-        print('Receitas cadastradas')
-        print('-' * 20)
-        # Percorre cada linha do arquivo
-        for i, linha in enumerate(f):
-            # Adiciona a linha na lista linhas
-            linha = linha[:-1]      # Remove o \n
-            linhas.append(linha)
-            # Exibe o nome
-            if (i == 0) or (i % 4 == 0):
-                print(f'{int(i / 4) + 1}ª receita: {linha}')
-            if detalhes:
-                # Exibe o país
-                if (i == 1) or (i % 5 == 0):
-                    print(f'\tPaís de origem: {linha}')
-                # Exibe o ingrediente
-                elif (i == 2) or (i % 6 == 0):
-                    print(f'\tIngredientes: {linha}')
-                # Exibe o modo de preparo
-                elif (i == 3) or (i % 7 == 0):
-                    print(f'\tModo de preparo: {linha}')
-
-        print('-' * 20)
+    # Tenta abrir o arquivo receitas.txt em modo leitura
+    try:
+        with open("receitas.txt", 'r', encoding="utf-8") as f:
+            # Percorre cada linha do arquivo
+            for linha in f:
+                # Adiciona a linha na lista linhas
+                linha = linha[:-1]      # Remove o \n
+                linhas.append(linha)
+        # Mas caso não exista o arquivo
+    except FileNotFoundError:
+        print('[AVISO] Erro ao tentar ler o arquivo receitas.txt')
+        print('[AVISO] Criando um novo arquivo receitas.txt ...')
+        # Será criado um novo vazio
+        open("receitas.txt", 'w', encoding="utf-8").close()
 
     # OBS: Cada receita no arquivo receita.txt é formado por um grupo de 4 linhas
     for i in range(0, len(linhas) - 3, 4):
@@ -105,6 +106,56 @@ def visualizar_receitas(detalhes: bool) -> list:
         if (i == 0) or (i % 4 == 0):
             receitas.append(receita)
 
+    # Pergunta qual tipo de visualização o usário quer ver
+    msg = 'Escolha o modo de visualização'
+    tam_msg = len(msg)
+    print('-' * tam_msg)
+    print(msg)
+    print('-' * tam_msg)
+
+    print('')
+    print('[ 1 ] - Pesquisar por país')
+    print('[ 2 ] - Exibir as receitas favoritas')
+    print('[ 3 ] - Exibir todas as receitas')
+    print('')
+    # Garante que a opção digitada seja um número e que esteja no intervalo de 1 a 7
+    while True:
+        opcao = input('Sua opção: ')
+        try:
+            opcao = int(opcao)
+            if (opcao >= 1) and (opcao <= 3):
+                break
+            else:
+                print('[AVISO] Opção inválida! Deve ser um número de 1 a 3, por favor digite novamente.')
+        except ValueError:
+            print('[AVISO] Opção inválida! Deve ser um número de 1 a 3, por favor digite novamente.')
+    opcao = input('Sua opção: ')
+    if opcao == 1:
+        pass
+    elif opcao == 2:
+        pass
+    elif opcao == 3:
+        print('-' * 20)
+        print('Todas as Receitas')
+        print('-' * 20)
+        for i, receita in enumerate(receitas):
+            # Exibe o nome
+            print(f'{i + 1}ª receita: {receitas[i]["nome"]}')
+            if detalhes:
+                # Exibe o país
+                print(f'\tPaís de origem: {receitas[i]["origem"]}')
+                # Exibe os ingredientes
+                print(f'\tIngredientes: {receitas[i]["ingredientes"]}')
+                # Exibe o modo de preparo no formato passo a passo
+                print('\tModo de preparo:')
+                passos = receitas[i]["preparo"].split('.')
+                for j, passo in enumerate(passos):
+                    print(f'\t{j + 1}º passo: {passo.strip()}')
+                    if (j + 1) == (len(passos) - 1):
+                        break
+
+    print('-' * 20)
+
     return receitas
 
 
@@ -122,10 +173,9 @@ def atualizar_receitas() -> None:
 
     # Solicita ao usuário que digite as novas informações de cada receita que ele escolheu modificar
     for i in range(len(receitas_mudar)):
-        print(receitas_mudar[i])
         for j in range(len(receitas)):
-            if receitas[j]['nome'] == receitas_mudar[i]:
-                print('Digite -1 para não modificar')
+            if (receitas[j]['nome']).lower() == receitas_mudar[i]:
+                print('OBS: Digite -1 para não modificar')
                 nova_origem = input(f'Digite o novo país de origem pra receita de {receitas_mudar[i]}: ')
                 if nova_origem != '-1':
                     receitas[j]['origem'] = nova_origem
@@ -139,7 +189,7 @@ def atualizar_receitas() -> None:
     # Atualiza no banco de dados
     adicionar_receitas(receitas, 'w')
 
-    return
+    return None
 
 
 # Função para exluir receitas do arquivo receitas.txt
@@ -168,7 +218,7 @@ def excluir_receitas() -> None:
     # Remove da lista receitas as receitas cujos nomes estão na lista receitas_para_excluir
     for i in range(len(receitas_para_excluir)):
         for j in range(len(receitas)):
-            if receitas[j]['nome'] == receitas_para_excluir[i]:
+            if (receitas[j]['nome']).lower() == receitas_para_excluir[i]:
                 print(f'[AVISO] {receitas[j]['nome']} foi excluído!')
                 receitas.pop(j)
                 break
@@ -176,17 +226,25 @@ def excluir_receitas() -> None:
     # Atualiza no banco de dados
     adicionar_receitas(receitas, 'w')
 
-    return
+    return None
 
 
 def sugerir_receitas():
-    return
+    return None
 
 
 def menor_receita() -> None:
-    # Abre o arquivo para leitura
-    with open("receitas.txt", 'r', encoding="utf-8") as f:
-        linhas = f.readlines()
+    # Tenta abrir o arquivo receitas.txt em modo leitura
+    try:
+        with open("receitas.txt", 'r', encoding="utf-8") as f:
+            linhas = f.readlines()
+    # Mas caso não exista o arquivo
+    except FileNotFoundError:
+        print('[AVISO] Erro ao tentar ler o arquivo receitas.txt')
+        print('[AVISO] Criando um novo arquivo receitas.txt ...')
+        # Será criado um novo
+        with open("receitas.txt", 'w', encoding="utf-8") as f:
+            pass
 
     # Inicializa a variável para armazenar a menor quantidade de ingredientes
     menor_quantidade = float('inf')
@@ -210,13 +268,15 @@ def menor_receita() -> None:
 
     # Exibe o nome da receita com a menor quantidade
     if len(receitas_menor_quantidade) == 1:
-        print(f'A receita {''.join(receitas_menor_quantidade)} possue a menor quantidade de ingredientes.')
+        print(f'A receita de {''.join(receitas_menor_quantidade)} possui a menor quantidade de ingredientes.')
 
     # Exibe os nomes das receitas com a menor quantidade de ingredientes na mesma linha, separados por vírgula
     elif len(receitas_menor_quantidade) > 1:
-        print('As receitas', ", ".join(receitas_menor_quantidade), ' possuem as menores quantidades de ingredientes.')
+        print('As receitas de', ", ".join(receitas_menor_quantidade), ' possuem as menores quantidades de ingredientes.')
 
     else:
-        print("Nenhuma receita foi encontrada.")
+        print('[AVISO] Não há nenhuma receita no banco de dados, por favor adicione alguma receita')
+        receitas = []
+        adicionar_receitas(receitas, 'a')
 
-    return
+    return None

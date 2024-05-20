@@ -90,27 +90,37 @@ if __name__ == '__main__':
         print('[ 6 ] - Menor Receita')
         print('[ 7 ] - Sair do Programa')
         print('')
-        opcao = input('Sua opção: ')
-        if opcao == '1':
+        # Garante que a opção digitada seja um número e que esteja no intervalo de 1 a 7
+        while True:
+            opcao = input('Sua opção: ')
+            try:
+                opcao = int(opcao)
+                if (opcao >= 1) and (opcao <= 7):
+                    break
+                else:
+                    print('[AVISO] Opção inválida! Deve ser um número de 1 a 7, por favor digite novamente.')
+            except ValueError:
+                print('[AVISO] Opção inválida! Deve ser um número de 1 a 7, por favor digite novamente.')
+        if opcao == 1:
             novas_receitas = []
             # Cria um novo banco de dados, caso não exista, e permite adicionar novas receitas nele
             gerenciar_receitas.adicionar_receitas(novas_receitas, 'a')
-        elif opcao == '2':
+        elif opcao == 2:
             # Exibe as receitas com as informações de país de origem, ingredientes e modo de preparo
             receitas_info = True
             gerenciar_receitas.visualizar_receitas(receitas_info)
-        elif opcao == '3':
+        elif opcao == 3:
             gerenciar_receitas.atualizar_receitas()
-        elif opcao == '4':
+        elif opcao == 4:
             gerenciar_receitas.excluir_receitas()
-        elif opcao == '5':
+        elif opcao == 5:
             gerenciar_receitas.sugerir_receitas()
-        elif opcao == '6':
+        elif opcao == 6:
             gerenciar_receitas.menor_receita()
-        elif opcao == '7':
+        elif opcao == 7:
             print('Programa encerrado!')
             break
-        else:
-            print('Opção inválida!')
 
         continuar = input('Deseja continuar usando o programa [S/N]? ').upper()
+
+    print('Programa encerrado!')
