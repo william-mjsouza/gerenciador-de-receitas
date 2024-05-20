@@ -1,13 +1,12 @@
-# Gerenciador de Receitas
-Projeto de um gerenciador de receitas em Python para a disciplina de Fundamentos de Programação.
+# Sistema de Gerenciamento de Receitas
 
-O software possui as seguintes funcionalidades:
-1. Cadastro de Receitas;
-2. CRUD de Receitas;
-3. Filtragem por País;
-4. Armazenamento em Banco de Dados;
-5. Lista de Favoritos;
-6. Sugestão de Receitas Aleatórias.
+## Índice
+- Descrição
+- Requisitos
+- Funcionalidades
+- Uso
+- Fluxograma
+- Autores
 
-Desenvolvido por:
-Arthur Leal, Bruno Carvalho, Thiago Nadler e William Souza
+## Descrição
+Este é um sistema de gerenciamento de receitas desenvolvido em Python, que permite ao usuário adicionar, favoritar, visualizar, atualizar e excluir receitas. O sistema também sugere receitas aleatórias e identifica a receita com a menor quantidade de ingredientes.
