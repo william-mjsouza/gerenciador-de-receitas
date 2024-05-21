@@ -50,6 +50,9 @@ Permite adicionar novas receitas ao banco de dados.
 ## Uso
 - Para utilizar este sistema, basta executar o arquivo gerenciador-de-receitas.py em um ambiente Python. O sistema guiará o usuário por meio de menus interativos para realizar as operações desejadas.
 
+##Fluxograma
+[<img src="/Fluxograma_-_FPA.jpg">](https://github.com/william-mjsouza/gerenciador-de-receitas-fpa-2024)
+
 ## Autores
 - Arthur Leal
 - Bruno Carvalho
