@@ -1,3 +1,5 @@
+import random
+
 def favoritar_receitas():
     return
 
@@ -272,7 +274,7 @@ def excluir_receitas() -> None:
     for i in range(len(receitas_para_excluir)):
         for j in range(len(receitas)):
             if (receitas[j]['nome']).lower() == receitas_para_excluir[i]:
-                print(f'[AVISO] {receitas[j]['nome']} foi excluído!')
+                print(f"[AVISO] {receitas[j]['nome']} foi excluído!")
                 receitas.pop(j)
                 break
 
@@ -293,8 +295,14 @@ def sugerir_receitas() -> None:
 
     # Pergunta ao usuário quantas receitas deseja que sejam sugeridas
     while True:
+        try:
             sugestao = int(input('Quantas receitas você deseja que sejam sugeridas? '))
-            
+            if sugestao <= 0:
+                print('[AVISO] Por favor, digite um número positivo.')
+            else:
+                break
+        except ValueError:
+            print('[AVISO] Por favor, digite um número válido.')
 
     # Seleciona aleatoriamente algumas receitas
     receitas_sugeridas = random.sample(receitas, min(sugestao, len(receitas)))
@@ -303,50 +311,41 @@ def sugerir_receitas() -> None:
     print('Receitas Sugeridas Aleatoriamente:')
     for i, receita in enumerate(receitas_sugeridas, start=1):
         print(f'{i}. {receita["nome"]} - {receita["origem"]}')
-  
+
+
     return None
-    
+
+
 def menor_receita() -> None:
-    # Tenta abrir o arquivo receitas.txt em modo leitura
     try:
         with open("receitas.txt", 'r', encoding="utf-8") as f:
             linhas = f.readlines()
-    # Mas caso não exista o arquivo
     except FileNotFoundError:
         print('[AVISO] Erro ao tentar ler o arquivo receitas.txt')
         print('[AVISO] Criando um novo arquivo receitas.txt ...')
-        # Será criado um novo
         with open("receitas.txt", 'w', encoding="utf-8") as f:
             pass
 
-    # Inicializa a variável para armazenar a menor quantidade de ingredientes
     menor_quantidade = float('inf')
-
-    # Inicializa a lista para armazenar os nomes das receitas com a menor quantidade de ingredientes
     receitas_menor_quantidade = []
 
-    # Itera sobre as linhas do arquivo, assumindo que cada receita ocupa 4 linhas
     for i in range(0, len(linhas), 4):
-        # Conta a quantidade de ingredientes da receita atual
-        ingredientes = linhas[i + 2].strip()  # A terceira linha de cada receita contém os ingredientes
+        ingredientes = linhas[i + 2].strip()
         quantidade_ingrediente = len(ingredientes.split(','))
 
-        # Verifica se a quantidade atual é menor ou igual à menor quantidade encontrada
         if quantidade_ingrediente < menor_quantidade:
             menor_quantidade = quantidade_ingrediente
-            receitas_menor_quantidade = [linhas[i].strip()]  # Reinicia a lista com o nome da receita atual
+            receitas_menor_quantidade = [linhas[i].strip()]
 
         elif quantidade_ingrediente == menor_quantidade:
-            receitas_menor_quantidade.append(linhas[i].strip())  # Adiciona o nome da receita à lista
+            receitas_menor_quantidade.append(linhas[i].strip())
 
-    # Exibe o nome da receita com a menor quantidade
     if len(receitas_menor_quantidade) == 1:
-        print(f'A receita de {''.join(receitas_menor_quantidade)} possui a menor quantidade de ingredientes.')
-
-    # Exibe os nomes das receitas com a menor quantidade de ingredientes na mesma linha, separados por vírgula
+        nome_receita = ''.join(receitas_menor_quantidade)
+        print(f'A receita de {nome_receita} possui a menor quantidade de ingredientes.')
     elif len(receitas_menor_quantidade) > 1:
-        print('As receitas de', ", ".join(receitas_menor_quantidade), ' possuem as menores quantidades de ingredientes.')
-
+        nomes_receitas = ', '.join(receitas_menor_quantidade)
+        print(f'As receitas de {nomes_receitas} possuem as menores quantidades de ingredientes.')
     else:
         print('[AVISO] Não há nenhuma receita no banco de dados, por favor adicione alguma receita')
         receitas = []
