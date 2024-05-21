@@ -283,10 +283,29 @@ def excluir_receitas() -> None:
 
 
 def sugerir_receitas() -> None:
+    # Adquiri as receitas disponiveis
+    receitas = visualizar_receitas(detalhes=False, todas=True)
 
+    # Verifica se há receitas disponíveis
+    if len(receitas) == 0:
+        print('[AVISO] Não há receitas disponíveis para sugestão.')
+        return
+
+    # Pergunta ao usuário quantas receitas deseja que sejam sugeridas
+    while True:
+            sugestao = int(input('Quantas receitas você deseja que sejam sugeridas? '))
+            
+
+    # Seleciona aleatoriamente algumas receitas
+    receitas_sugeridas = random.sample(receitas, min(sugestao, len(receitas)))
+
+    # Exibe as receitas sugeridas
+    print('Receitas Sugeridas Aleatoriamente:')
+    for i, receita in enumerate(receitas_sugeridas, start=1):
+        print(f'{i}. {receita["nome"]} - {receita["origem"]}')
+  
     return None
-
-
+    
 def menor_receita() -> None:
     # Tenta abrir o arquivo receitas.txt em modo leitura
     try:
