@@ -1,9 +1,25 @@
 import random
 
 def favoritar_receitas():
-    return
+    # Exibe o nome das receitas que estão cadastradas no banco de dados
+    receitas = visualizar_receitas(False, True)
+     # Pergunta ao usuário quais receitas ele quer favoritar
+    receitas_fav = input('Qual dessas receitas você que adicionar as favoritas [digite separado por vírgula]? ').split(',')
+    # Remove os espaços antes e depois dos nomes das receitas e deixa todos os caracteres deles em minúsculas
+    for i in range(len(receitas_fav)):
+        receitas_fav[i] = receitas_fav[i].strip().lower()
 
-
+    # O programa irá adicionar as favoritas as receitas desejadas
+    for i in range(len(receitas_fav)):
+        for j in range(len(receitas)):
+            if (receitas[j]['nome']).lower() == receitas_fav[i]:
+                receitas[j]['nome'] +='*'
+                
+    # Atualiza no banco de dados
+    adicionar_receitas(receitas, 'w')            
+    
+    return None
+    
 # Função para adicionar receitas ao arquivo receitas.txt
 def adicionar_receitas(receitas: list, modo: str) -> None:
     # Se o modo de abertura do arquivo for apêndice, será preenchida a lista com novas receitas
